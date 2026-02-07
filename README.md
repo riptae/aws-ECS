@@ -1,5 +1,5 @@
 [0]
-EKS
+EKS / EC2 -> Fargate 단일 서비스
 260207(토) 스타벅스 + 버스
 
 -
@@ -27,3 +27,9 @@ EKS
 - container_port
 - cpu
 - memory
+
+-
+
+[2] plate // 260207 // ㅁ메가커피
+- VPC
+- Subnet
