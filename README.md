@@ -33,3 +33,9 @@ EKS / EC2 -> Fargate 단일 서비스
 [2] plate // 260207 // ㅁ메가커피
 - VPC
 - Subnet
+
+-
+
+[3] //
+- cloudwatch
+- ecs cluster
