@@ -88,3 +88,32 @@ resource "aws_security_group" "sg" {
     Name = "ECS SG"
   }
 }
+
+# ECS TASKS
+resource "aws_ecs_task_definition" "task" {
+  family                   = "${var.name}-task"
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = tostring(var.cpu)
+  memory                   = tostring(var.memory)
+  execution_role_arn       = aws_iam_role.task_exec.arn
+
+  container_definitions = jsonencode([{
+    name  = "app"
+    image = var.image
+
+    portMappings = [{
+      containerPort = var.container_port
+      protocol      = "tcp"
+    }]
+
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.lg.name
+        awslogs-region        = var.aws_region
+        awslogs-stream-prefix = "app"
+      }
+    }
+  }])
+}

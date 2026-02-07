@@ -51,3 +51,8 @@ EKS / EC2 -> Fargate 단일 서비스
 
 [5] SG
 - SG test for 8080 open
+
+-
+
+[6] TASK
+- ECS TASK
