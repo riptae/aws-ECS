@@ -64,3 +64,27 @@ resource "aws_iam_role_policy_attachment" "task_exec_attach" {
   role       = aws_iam_role.task_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
+
+# SG : 8080 open for test
+resource "aws_security_group" "sg" {
+  name   = "${var.name}-sg"
+  vpc_id = aws_vpc.plate.id
+
+  ingress {
+    from_port   = var.container_port
+    to_port     = var.container_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ECS SG"
+  }
+}
