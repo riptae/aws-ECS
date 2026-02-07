@@ -43,3 +43,24 @@ resource "aws_cloudwatch_log_group" "lg" {
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.name}-cluster"
 }
+
+# IAMROLE
+data "aws_iam_policy_document" "ecs_task_doc" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "task_exec" {
+  name               = "${var.name}-task-exec"
+  assume_role_policy = data.aws_iam_policy_document.ecs_task_doc.json
+}
+
+resource "aws_iam_role_policy_attachment" "task_exec_attach" {
+  role       = aws_iam_role.task_exec.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}

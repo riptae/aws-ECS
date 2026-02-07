@@ -39,3 +39,10 @@ EKS / EC2 -> Fargate 단일 서비스
 [3] //
 - cloudwatch
 - ecs cluster
+
+-
+
+[4] // IAMROLE
+- iampolicydoc
+- iamrole
+- iamrole policy attachment
