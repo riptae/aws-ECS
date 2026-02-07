@@ -33,6 +33,23 @@ resource "aws_subnet" "public_a" {
   }
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.plate.id
+}
+
+resource "aws_route_table" "rt" {
+    vpc_id = aws_vpc.plate.id
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = aws_internet_gateway.igw.id
+    }
+}
+
+resource "aws_route_table_association" "assoc" {
+  subnet_id = aws_subnet.public_a.id
+  route_table_id = aws_route_table.rt.id
+}
+
 # log
 resource "aws_cloudwatch_log_group" "lg" {
   name              = "/ecs/${var.name}"
@@ -116,4 +133,19 @@ resource "aws_ecs_task_definition" "task" {
       }
     }
   }])
+}
+
+# ecs service
+resource "aws_ecs_service" "service" {
+  name            = "${var.name}-svc"
+  cluster         = aws_ecs_cluster.cluster.id
+  task_definition = aws_ecs_task_definition.task.id
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets          = [aws_subnet.public_a.id]
+    security_groups  = [aws_security_group.sg.id]
+    assign_public_ip = true
+  }
 }

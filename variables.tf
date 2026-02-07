@@ -10,13 +10,13 @@ variable "name" {
 
 variable "image" {
   type    = string
-  default = "public.ecr.aws/amazonlinux/amazonlinux:2023"
+  default = "nginx:alpine"
   // for test : 8080 port 웹 응답 public img
 }
 
 variable "container_port" {
   type    = number
-  default = 8080
+  default = 80
 }
 
 variable "cpu" {

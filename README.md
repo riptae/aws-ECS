@@ -56,3 +56,9 @@ EKS / EC2 -> Fargate 단일 서비스
 
 [6] TASK
 - ECS TASK
+
+
+-
+
+[7] SERVICE
+- ECS SERVICE
