@@ -1,5 +1,5 @@
 [0]
-EKS / EC2 -> Fargate 단일 서비스
+ECS -> Fargate 단일 서비스
 260207(토) 스타벅스 + 버스
 
 -
